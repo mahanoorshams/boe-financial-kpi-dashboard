@@ -1,0 +1,51 @@
+table Date_Table
+	lineageTag: 79c3aa2d-e157-4299-9497-4030653c8ef4
+
+	column Date
+		formatString: General Date
+		lineageTag: b07433ae-7ec5-40ec-8ae6-48727d901bc8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: d5f0d0c6-e02a-4a31-aab2-4a81af92f6c7
+			defaultHierarchy: LocalDateTable_8b035d1a-1b47-47de-b3a5-8f296c6c2048.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year = YEAR([Date])
+		formatString: 0
+		lineageTag: 696825a3-37dc-44d6-b9e6-e19d96188c61
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month = MONTH([Date])
+		formatString: 0
+		lineageTag: 8eb2a91b-d483-48c3-b2cb-c8a8cc4292ef
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name' = FORMAT([Date], "MMM YYYY")
+		lineageTag: d889c431-db07-4700-92ed-2b55710acef8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Quarter' = YEAR([Date]) & " Q" & QUARTER([Date])
+		lineageTag: 3acf93e4-1912-45b2-9abb-e1815c14e69f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date_Table = calculated
+		mode: import
+		source =
+				
+				CALENDAR(DATE(1990,1,1), DATE(2026,12,31))
+
+	annotation PBI_Id = b5fea4d1341d46408bb06ccfda0ce43b
+

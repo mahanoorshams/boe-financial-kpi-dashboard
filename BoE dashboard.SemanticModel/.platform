@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "BoE dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4d88ac11-8678-4126-84b1-190c9b6923f0"
+  }
+}

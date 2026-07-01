@@ -1,0 +1,121 @@
+table boe_monthly_snapshot_clean
+	lineageTag: 2b83d316-e224-4d27-88fa-4869a0e056fb
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 75c87a42-df92-48b1-8dd4-48c0a080b5b1
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 161d1211-2442-4984-bdd2-9da49f25ecf9
+			defaultHierarchy: LocalDateTable_b3ffdf5a-e7af-48d0-969e-2ab7eecf1643.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Mortgage_Outstanding_GBP_bn
+		dataType: double
+		lineageTag: 78ccc685-b095-4717-b31f-cf42222975c6
+		summarizeBy: sum
+		sourceColumn: Mortgage_Outstanding_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Mortgage_Monthly_Change_GBP_bn
+		dataType: double
+		lineageTag: 9323bbca-ea24-4896-9e8e-eab75b3ddf8d
+		summarizeBy: sum
+		sourceColumn: Mortgage_Monthly_Change_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Mortgage_12m_Growth_Pct
+		dataType: double
+		lineageTag: cf2cfde9-4607-4345-9b94-891799599ad7
+		summarizeBy: sum
+		sourceColumn: Mortgage_12m_Growth_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Consumer_Credit_Outstanding_GBP_bn
+		dataType: double
+		lineageTag: fed68f27-15a9-4944-99fc-0f011e1668f4
+		summarizeBy: sum
+		sourceColumn: Consumer_Credit_Outstanding_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Consumer_Credit_Monthly_Change_GBP_bn
+		dataType: double
+		lineageTag: fdad9c5c-6975-402e-99f6-46e32a457f9e
+		summarizeBy: sum
+		sourceColumn: Consumer_Credit_Monthly_Change_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Consumer_Credit_12m_Growth_Pct
+		dataType: double
+		lineageTag: 8ee7d918-9aa4-46c1-818c-33cb9ad89964
+		summarizeBy: sum
+		sourceColumn: Consumer_Credit_12m_Growth_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column M4_Outstanding_GBP_bn
+		dataType: double
+		lineageTag: f15ff335-b748-446d-b1bd-d3363951e387
+		summarizeBy: sum
+		sourceColumn: M4_Outstanding_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column M4_Monthly_Change_GBP_bn
+		dataType: double
+		lineageTag: def831ae-d2fe-4bc5-bc8d-877817e5f718
+		summarizeBy: sum
+		sourceColumn: M4_Monthly_Change_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column M4_12m_Growth_Pct
+		dataType: double
+		lineageTag: 6f169790-b050-46dc-a388-5783f900fa18
+		summarizeBy: sum
+		sourceColumn: M4_12m_Growth_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition boe_monthly_snapshot_clean = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\mahan\BoE dashboard\Raw_Data\boe_monthly_snapshot_clean.csv"), [Delimiter = ",", Columns = 10, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type date}, {"Mortgage_Outstanding_GBP_bn", type number}, {"Mortgage_Monthly_Change_GBP_bn", type number}, {"Mortgage_12m_Growth_Pct", type number}, {"Consumer_Credit_Outstanding_GBP_bn", type number}, {"Consumer_Credit_Monthly_Change_GBP_bn", type number}, {"Consumer_Credit_12m_Growth_Pct", type number}, {"M4_Outstanding_GBP_bn", type number}, {"M4_Monthly_Change_GBP_bn", type number}, {"M4_12m_Growth_Pct", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,30 @@
+relationship 161d1211-2442-4984-bdd2-9da49f25ecf9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: boe_monthly_snapshot_clean.Date
+	toColumn: LocalDateTable_b3ffdf5a-e7af-48d0-969e-2ab7eecf1643.Date
+
+relationship 614e15fe-6539-e7cd-6d5d-c46aab17dbf6
+	crossFilteringBehavior: bothDirections
+	fromColumn: bank_of_england_database.Date
+	toColumn: Date_Table.Date
+
+relationship dbfa3f64-299f-0b88-e0ff-88291ae697bc
+	crossFilteringBehavior: bothDirections
+	fromColumn: bank_rate_monthly_clean.Date
+	toColumn: Date_Table.Date
+
+relationship aa00b3a8-870f-16df-3b70-b1aca3b1a552
+	crossFilteringBehavior: bothDirections
+	fromColumn: consumer_credit_historical_clean.Date
+	toColumn: Date_Table.Date
+
+relationship d5f0d0c6-e02a-4a31-aab2-4a81af92f6c7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Date_Table.Date
+	toColumn: LocalDateTable_8b035d1a-1b47-47de-b3a5-8f296c6c2048.Date
+
+relationship 35169644-9f76-e453-7545-fc05fe017430
+	crossFilteringBehavior: bothDirections
+	fromColumn: m4_historical_clean.Date
+	toColumn: Date_Table.Date
+

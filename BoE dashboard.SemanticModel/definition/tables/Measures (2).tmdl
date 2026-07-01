@@ -1,0 +1,370 @@
+table 'Measures (2)'
+	lineageTag: 2ad51dd1-d0aa-4551-acf8-f66cb7d457ed
+
+	measure 'Latest Mortgage Outstanding GBP bn' =
+			
+			VAR LatestDate =
+			    CALCULATE(
+			        MAX(bank_of_england_database[Date]),
+			        ALL(bank_of_england_database)
+			    )
+			RETURN
+			    CALCULATE(
+			        SUM(bank_of_england_database[Mortgage_Outstanding_GBP_bn]),
+			        bank_of_england_database[Date] = LatestDate
+			    )
+		formatString: \£#,0 bn;-\£#,0 bn;\£#,0 bn
+		lineageTag: aba0c588-f712-4004-8bfe-7f64b3353125
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Mortgage YoY Growth %' =
+			
+			VAR CurrentOutstanding =
+			    SUM(bank_of_england_database[Mortgage_Outstanding_GBP_bn])
+			VAR PriorYearOutstanding =
+			    CALCULATE(
+			        SUM(bank_of_england_database[Mortgage_Outstanding_GBP_bn]),
+			        SAMEPERIODLASTYEAR(Date_Table[Date])
+			    )
+			RETURN
+			    DIVIDE(
+			        CurrentOutstanding - PriorYearOutstanding,
+			        PriorYearOutstanding
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d8cc1a8c-32f3-460c-8c59-f4fba4ea66c5
+
+	measure 'Mortgage Outstanding 1Y Ago GBP bn' =
+			
+			CALCULATE(
+			    SUM(bank_of_england_database[Mortgage_Outstanding_GBP_bn]),
+			    DATEADD(Date_Table[Date], -1, YEAR)
+			)
+		lineageTag: 5acd7bb8-b1ff-490e-8968-c64a7cb1175d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Mortgage Avg Outstanding YTD' =
+			
+			CALCULATE(
+			    AVERAGE(bank_of_england_database[Mortgage_Outstanding_GBP_bn]),
+			    DATESYTD(Date_Table[Date])
+			)
+		lineageTag: 588b64dd-43c0-4196-a969-92d8988eaed0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Current Bank Rate %' =
+			
+			VAR LatestDate =
+			    CALCULATE(
+			        MAX(bank_rate_monthly_clean[Date]),
+			        ALL(bank_rate_monthly_clean)
+			    )
+			RETURN
+			    CALCULATE(
+			        MAX(bank_rate_monthly_clean[Bank_Rate_Pct]),
+			        bank_rate_monthly_clean[Date] = LatestDate
+			    )
+		formatString: 0.00"%"
+		lineageTag: b0ea49bc-81d1-45dd-8317-d70cd4d3bf82
+		dataCategory: Uncategorized
+
+	measure 'Bank Rate Change from 2023 Peak' =
+			
+			VAR Peak2023 =
+			    CALCULATE(
+			        MAX(bank_rate_monthly_clean[Bank_Rate_Pct]),
+			        FILTER(
+			            ALL(bank_rate_monthly_clean),
+			            YEAR(bank_rate_monthly_clean[Date]) = 2023
+			        )
+			    )
+			VAR CurrentRate =
+			    CALCULATE(
+			        MAX(bank_rate_monthly_clean[Bank_Rate_Pct]),
+			        ALL(bank_rate_monthly_clean),
+			        bank_rate_monthly_clean[Date] = MAX(bank_rate_monthly_clean[Date])
+			    )
+			RETURN
+			    CurrentRate - Peak2023
+		lineageTag: 0da4bbdd-3468-4b83-b702-f12afbd01597
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Mortgage Growth Band' =
+			
+			VAR GrowthRate = [Mortgage YoY Growth %]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(GrowthRate), "No Data",
+			        GrowthRate >= 0.05, "Strong",
+			        GrowthRate >= 0.02, "Moderate",
+			        GrowthRate >= 0, "Slow",
+			        "Contraction"
+			    )
+		lineageTag: e7df153a-e7ff-4a77-a8ad-a686a21c6da8
+
+	measure 'Bank Rate YoY Change pp' =
+			
+			VAR CurrentYearEnd =
+			    CALCULATE(
+			        MAX(bank_rate_monthly_clean[Bank_Rate_Pct]),
+			        LASTDATE(Date_Table[Date])
+			    )
+			VAR PriorYearEnd =
+			    CALCULATE(
+			        MAX(bank_rate_monthly_clean[Bank_Rate_Pct]),
+			        LASTDATE(SAMEPERIODLASTYEAR(Date_Table[Date]))
+			    )
+			RETURN
+			    IF(
+			        ISBLANK(PriorYearEnd), BLANK(),
+			        CurrentYearEnd - PriorYearEnd
+			    )
+		lineageTag: 363a43e9-e0d0-4662-9e42-8fd9ccb7b68e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Consumer Credit Latest GBP bn' =
+			
+			CALCULATE(
+			    MAX(boe_monthly_snapshot_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			    ALL(boe_monthly_snapshot_clean)
+			)
+		formatString: "£"#,0.00;-"£"#,0.00;"£"#,0.00
+		lineageTag: 57d7f64d-61bd-4f8e-bab4-4912d2b86b6b
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Latest M4 Outstanding GBP bn' =
+			
+			CALCULATE(
+			    MAX(boe_monthly_snapshot_clean[M4_Outstanding_GBP_bn]),
+			    ALL(boe_monthly_snapshot_clean)
+			)
+		formatString: "£"#,0.00;-"£"#,0.00;"£"#,0.00
+		lineageTag: 3ed3962a-f8c4-4000-849c-67d8582c4da6
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Consumer Credit 12m Growth %' =
+			
+			CALCULATE(
+			    MAX(boe_monthly_snapshot_clean[Consumer_Credit_12m_Growth_Pct]),
+			    ALL(boe_monthly_snapshot_clean)
+			)
+		lineageTag: 6ea97265-e33f-444f-8dbf-084db9fdec2e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Consumer Credit Pre-COVID Peak GBP bn' =
+			
+			CALCULATE(
+			    MAX(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			    FILTER(ALL(Date_Table), Date_Table[Year] <= 2019)
+			)
+		formatString: \£#,0.0 bn;-\£#,0.0 bn;\£#,0.0 bn
+		lineageTag: 0fe2bf73-5ef1-41b9-af76-5f9ac8115cdc
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'M4 Growth 2007 to Latest %' =
+			
+			VAR Base2007 =
+			    CALCULATE(
+			        AVERAGE(m4_historical_clean[M4_Outstanding_GBP_bn]),
+			        FILTER(ALL(Date_Table), Date_Table[Year] = 2007)
+			    )
+			VAR Latest = [Latest M4 (Hist) GBP bn]
+			RETURN
+			    DIVIDE(Latest - Base2007, Base2007)
+		formatString: 0%;-0%;0%
+		lineageTag: a65807c3-5a46-46fb-84fe-e58856d6fca6
+
+	measure 'Consumer Credit YoY Growth %' =
+			
+			VAR CurrentVal =
+			    MAX(boe_monthly_snapshot_clean[Consumer_Credit_Outstanding_GBP_bn])
+			VAR Prior =
+			    CALCULATE(
+			        MAX(boe_monthly_snapshot_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			        DATEADD(Date_Table[Date], -1, YEAR)
+			    )
+			RETURN
+			    DIVIDE(CurrentVal - Prior, Prior)
+		lineageTag: 2e3d5036-e648-4343-80f1-2f43e91f98f3
+
+	measure 'Mortgage Outstanding Year End GBP bn' =
+			
+			CALCULATE(
+			    LASTNONBLANK(
+			        bank_of_england_database[Mortgage_Outstanding_GBP_bn], 1
+			    ),
+			    LASTDATE(Date_Table[Date])
+			)
+		lineageTag: 780242ff-3fcb-47a4-91a8-002e85a85e4b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Bank Rate %' = MAX(bank_rate_monthly_clean[Bank_Rate_Pct])
+		lineageTag: 9e87fd0b-1b36-4305-8504-78a3bfaf9007
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Consumer Credit Outstanding GBP bn' = AVERAGE(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn])
+		formatString: #,0.0
+		lineageTag: 1a2b3c4d-e5f6-7890-a1b2-c3d4e5f67890
+
+	measure 'M4 Outstanding GBP bn' = AVERAGE(m4_historical_clean[M4_Outstanding_GBP_bn])
+		formatString: #,0.0
+		lineageTag: 2b3c4d5e-f6a7-8901-b2c3-d4e5f6789012
+
+	measure 'Consumer Credit YoY Growth % (Hist)' =
+			
+			VAR CurrentYearEnd =
+			    CALCULATE(
+			        MAX(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			        LASTDATE(Date_Table[Date])
+			    )
+			VAR PriorYearEnd =
+			    CALCULATE(
+			        MAX(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			        LASTDATE(SAMEPERIODLASTYEAR(Date_Table[Date]))
+			    )
+			RETURN
+			    DIVIDE(CurrentYearEnd - PriorYearEnd, PriorYearEnd)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 3c4d5e6f-a7b8-9012-c3d4-e5f678901234
+
+	measure 'Latest Consumer Credit (Hist) GBP bn' =
+			
+			VAR MaxDate = MAXX(ALL(consumer_credit_historical_clean), consumer_credit_historical_clean[Date])
+			RETURN
+			    CALCULATE(
+			        MAX(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			        consumer_credit_historical_clean[Date] = MaxDate
+			    )
+		formatString: "£"#,0.0;-"£"#,0.0;"£"#,0.0
+		lineageTag: 4d5e6f7a-b8c9-0123-d4e5-f67890123456
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Latest M4 (Hist) GBP bn' =
+			
+			VAR MaxDate = MAXX(ALL(m4_historical_clean), m4_historical_clean[Date])
+			RETURN
+			    CALCULATE(
+			        MAX(m4_historical_clean[M4_Outstanding_GBP_bn]),
+			        m4_historical_clean[Date] = MaxDate
+			    )
+		formatString: \£#,0 bn;-\£#,0 bn;\£#,0 bn
+		lineageTag: 5e6f7a8b-c9d0-1234-e5f6-789012345678
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'Consumer Credit COVID Contraction GBP bn' =
+			
+			VAR PreCovidPeak =
+			    CALCULATE(
+			        MAX(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			        FILTER(ALL(Date_Table), Date_Table[Year] = 2019)
+			    )
+			VAR CovidLow =
+			    CALCULATE(
+			        MIN(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			        FILTER(ALL(Date_Table), Date_Table[Year] >= 2020 && Date_Table[Year] <= 2021)
+			    )
+			RETURN
+			    CovidLow - PreCovidPeak
+		formatString: \£#,0.0 bn;-\£#,0.0 bn;\£#,0.0 bn
+		lineageTag: 6f7a8b9c-d0e1-2345-f6a7-890123456789
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'M4 COVID Surge GBP bn' =
+			
+			VAR Pre =
+			    CALCULATE(
+			        MAX(m4_historical_clean[M4_Outstanding_GBP_bn]),
+			        FILTER(ALL(m4_historical_clean), YEAR(m4_historical_clean[Date]) = 2019)
+			    )
+			VAR Peak =
+			    CALCULATE(
+			        MAX(m4_historical_clean[M4_Outstanding_GBP_bn]),
+			        FILTER(ALL(m4_historical_clean), YEAR(m4_historical_clean[Date]) = 2020)
+			    )
+			RETURN
+			    Peak - Pre
+		formatString: \£#,0.0 bn;-\£#,0.0 bn;\£#,0.0 bn
+		lineageTag: 7a8b9c0d-e1f2-3456-7a8b-901234567890
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	measure 'M4 Growth Since 2000 %' =
+			
+			VAR Base =
+			    CALCULATE(
+			        AVERAGE(m4_historical_clean[M4_Outstanding_GBP_bn]),
+			        FILTER(ALL(Date_Table), Date_Table[Year] = 2000)
+			    )
+			VAR Latest = [Latest M4 (Hist) GBP bn]
+			RETURN
+			    DIVIDE(Latest - Base, Base)
+		formatString: 0%;-0%;0%
+		lineageTag: 8b9c0d1e-f2a3-4567-8b9c-012345678901
+
+	measure 'Mortgage Index (2007=100)' =
+			
+			VAR Base2007 =
+			    CALCULATE(
+			        AVERAGE(bank_of_england_database[Mortgage_Outstanding_GBP_bn]),
+			        FILTER(ALL(Date_Table), Date_Table[Year] = 2007)
+			    )
+			VAR CurrentVal = AVERAGE(bank_of_england_database[Mortgage_Outstanding_GBP_bn])
+			RETURN
+			    IF(NOT ISBLANK(CurrentVal), DIVIDE(CurrentVal, Base2007) * 100)
+		formatString: 0.0
+		lineageTag: 9c0d1e2f-a3b4-5678-9c0d-1e2f3a4b5c6d
+
+	measure 'Consumer Credit Index (2007=100)' =
+			
+			VAR Base2007 =
+			    CALCULATE(
+			        AVERAGE(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn]),
+			        FILTER(ALL(Date_Table), Date_Table[Year] = 2007)
+			    )
+			VAR CurrentVal = AVERAGE(consumer_credit_historical_clean[Consumer_Credit_Outstanding_GBP_bn])
+			RETURN
+			    IF(NOT ISBLANK(CurrentVal), DIVIDE(CurrentVal, Base2007) * 100)
+		formatString: 0.0
+		lineageTag: 0d1e2f3a-b4c5-6789-0d1e-2f3a4b5c6d7e
+
+	measure 'M4 Index (2007=100)' =
+			
+			VAR Base2007 =
+			    CALCULATE(
+			        AVERAGE(m4_historical_clean[M4_Outstanding_GBP_bn]),
+			        FILTER(ALL(Date_Table), Date_Table[Year] = 2007)
+			    )
+			VAR CurrentVal = AVERAGE(m4_historical_clean[M4_Outstanding_GBP_bn])
+			RETURN
+			    IF(NOT ISBLANK(CurrentVal), DIVIDE(CurrentVal, Base2007) * 100)
+		formatString: 0.0
+		lineageTag: 1e2f3a4b-c5d6-789a-1e2f-3a4b5c6d7e8f
+
+	partition 'Measures (2)' = m
+		mode: import
+		source =
+				let
+				  Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t, Column2 = _t]),
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Column2", "Column1"})
+				in
+				  #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,28 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["bank_of_england_database","boe_monthly_snapshot_clean","mlar_mortgage_rates_clean","bank_rate_monthly_clean","Measures (2)","consumer_credit_historical_clean","m4_historical_clean"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table bank_of_england_database
+ref table DateTableTemplate_2d673fc6-2b54-4f61-bbf8-354c85fe53f4
+ref table boe_monthly_snapshot_clean
+ref table LocalDateTable_b3ffdf5a-e7af-48d0-969e-2ab7eecf1643
+ref table mlar_mortgage_rates_clean
+ref table bank_rate_monthly_clean
+ref table Date_Table
+ref table 'Measures (2)'
+ref table consumer_credit_historical_clean
+ref table m4_historical_clean
+ref table LocalDateTable_8b035d1a-1b47-47de-b3a5-8f296c6c2048
+
+ref cultureInfo en-GB
+

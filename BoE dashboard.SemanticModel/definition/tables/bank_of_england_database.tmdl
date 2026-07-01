@@ -1,0 +1,45 @@
+table bank_of_england_database
+	lineageTag: eda8f34d-1949-412f-b140-479dc7b77131
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5e7e29e2-169b-48da-b3ed-f41608430e00
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Mortgage_Outstanding_GBP_bn
+		dataType: double
+		lineageTag: 3ed52591-41cd-45a3-8efe-7c56d04ebf1b
+		summarizeBy: sum
+		sourceColumn: Mortgage_Outstanding_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition bank_of_england_database = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\mahan\BoE dashboard\Raw_Data\Bank of England  Database.csv"), [Delimiter = ",", Columns = 3, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type date}, {"Monthly amounts outstanding of total sterling net secured lending to individuals (in sterling millions) seasonally adjusted              [a] [b] [c] [d] [e] [f]             LPMVTXK", Int64.Type}, {"Quarterly amounts outstanding of total sterling net secured lending to individuals (in sterling millions) seasonally adjusted              [g] [b]             LPQVTXK", type text}}, "en-US"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed column type",{"Quarterly amounts outstanding of total sterling net secured lending to individuals (in sterling millions) seasonally adjusted              [g] [b]             LPQVTXK"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Monthly amounts outstanding of total sterling net secured lending to individuals (in sterling millions) seasonally adjusted              [a] [b] [c] [d] [e] [f]             LPMVTXK", "Mortgage_Outstanding_GBP_bn"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Mortgage_Outstanding_GBP_bn", type number}}),
+				    #"Divided Column" = Table.TransformColumns(#"Changed Type", {{"Mortgage_Outstanding_GBP_bn", each _ / 1000, type number}}),
+				    #"Sorted Rows" = Table.Sort(#"Divided Column",{{"Date", Order.Ascending}})
+				in
+				    #"Sorted Rows"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

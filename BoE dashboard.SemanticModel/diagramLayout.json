@@ -1,0 +1,125 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 75.199996948242188
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 620,
+            "y": 0
+          },
+          "nodeIndex": "boe_monthly_snapshot_clean",
+          "nodeLineageTag": "2b83d316-e224-4d27-88fa-4869a0e056fb",
+          "size": {
+            "height": 327,
+            "width": 304
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 152
+          },
+          "nodeIndex": "mlar_mortgage_rates_clean",
+          "nodeLineageTag": "8ae9eb02-7c0d-4912-8056-37203d489f64",
+          "size": {
+            "height": 186,
+            "width": 168
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 341
+          },
+          "nodeIndex": "bank_rate_monthly_clean",
+          "nodeLineageTag": "4186807c-c1b2-439c-be4d-1464f45b796a",
+          "size": {
+            "height": 145,
+            "width": 268
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 294,
+            "y": 94.5
+          },
+          "nodeIndex": "Date_Table",
+          "nodeLineageTag": "79c3aa2d-e157-4299-9497-4030653c8ef4",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 497.5
+          },
+          "nodeIndex": "Measures (2)",
+          "nodeLineageTag": "2ad51dd1-d0aa-4551-acf8-f66cb7d457ed",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "bank_of_england_database",
+          "size": {
+            "height": 145,
+            "width": 268
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 270,
+            "y": 459
+          },
+          "nodeIndex": "consumer_credit_historical_clean",
+          "nodeLineageTag": "34a9ea3e-239d-4e05-887a-f3932db8c955",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 499,
+            "y": 332
+          },
+          "nodeIndex": "m4_historical_clean",
+          "nodeLineageTag": "ec4b117b-c9d5-4c45-9959-175d2106f311",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

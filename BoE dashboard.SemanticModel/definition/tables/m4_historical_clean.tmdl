@@ -1,0 +1,34 @@
+table m4_historical_clean
+	lineageTag: ec4b117b-c9d5-4c45-9959-175d2106f311
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: aacbcdd3-c982-4a1d-8d5e-a93212b7c3da
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column M4_Outstanding_GBP_bn
+		dataType: double
+		lineageTag: f26469a2-754e-4986-8a0c-0a260817c3eb
+		summarizeBy: sum
+		sourceColumn: M4_Outstanding_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition m4_historical_clean = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\mahan\BoE dashboard\Raw_Data\m4_historical_clean.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type date}, {"M4_Outstanding_GBP_bn", type number}}, "en-GB")
+				in
+				  #"Changed column type"
+

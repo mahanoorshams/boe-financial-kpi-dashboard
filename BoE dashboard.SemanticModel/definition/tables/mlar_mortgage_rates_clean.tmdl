@@ -1,0 +1,43 @@
+table mlar_mortgage_rates_clean
+	lineageTag: 8ae9eb02-7c0d-4912-8056-37203d489f64
+
+	column Quarter
+		dataType: string
+		lineageTag: 19a213a3-d936-40f6-8ae3-3704cfcdd645
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rate_Type
+		dataType: string
+		lineageTag: 4d9116f3-c239-4e46-a24e-f5a9bbb41336
+		summarizeBy: none
+		sourceColumn: Rate_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rate_Percent
+		dataType: double
+		lineageTag: d07cd5c3-993e-452f-a730-6179d3d272af
+		summarizeBy: sum
+		sourceColumn: Rate_Percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition mlar_mortgage_rates_clean = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\mahan\BoE dashboard\Raw_Data\mlar_mortgage_rates_clean.csv"), [Delimiter = ",", Columns = 3, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Quarter", type text}, {"Rate_Type", type text}, {"Rate_Percent", type number}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

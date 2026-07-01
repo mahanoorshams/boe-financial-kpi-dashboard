@@ -1,0 +1,34 @@
+table consumer_credit_historical_clean
+	lineageTag: 34a9ea3e-239d-4e05-887a-f3932db8c955
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 25ae25b7-f015-4840-919a-48b0baa37568
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Consumer_Credit_Outstanding_GBP_bn
+		dataType: double
+		lineageTag: cc658ece-23df-4e6e-b84e-e4da72f534fb
+		summarizeBy: sum
+		sourceColumn: Consumer_Credit_Outstanding_GBP_bn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition consumer_credit_historical_clean = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\mahan\BoE dashboard\Raw_Data\consumer_credit_historical_clean.csv"), [Delimiter = ",", Columns = 2, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type date}, {"Consumer_Credit_Outstanding_GBP_bn", type number}}, "en-GB")
+				in
+				  #"Changed column type"
+
