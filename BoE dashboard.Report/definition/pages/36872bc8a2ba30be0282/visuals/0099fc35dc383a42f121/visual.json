@@ -195,7 +195,7 @@
                         {
                           "Condition": {
                             "Comparison": {
-                              "ComparisonKind": 3,
+                              "ComparisonKind": 4,
                               "Left": {
                                 "Measure": {
                                   "Expression": {
@@ -208,7 +208,7 @@
                               },
                               "Right": {
                                 "Literal": {
-                                  "Value": "0D"
+                                  "Value": "10D"
                                 }
                               }
                             }
