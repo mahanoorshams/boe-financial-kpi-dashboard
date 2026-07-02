@@ -167,6 +167,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "gridlineShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
