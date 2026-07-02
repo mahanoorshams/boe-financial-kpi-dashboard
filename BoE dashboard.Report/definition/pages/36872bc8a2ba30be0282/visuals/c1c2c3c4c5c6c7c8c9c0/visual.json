@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "c1c2c3c4c5c6c7c8c9c0",
   "position": {
-    "x": 575,
-    "y": 91,
-    "z": 25000,
-    "height": 26,
-    "width": 274,
-    "tabOrder": 25000
+    "x": 588.57142857142856,
+    "y": 197.14285714285717,
+    "z": 16000,
+    "height": 30.000000000000004,
+    "width": 272.85714285714289,
+    "tabOrder": 15000
   },
   "visual": {
     "visualType": "textbox",
@@ -19,11 +19,19 @@
               {
                 "textRuns": [
                   {
+                    "value": "▲ ",
+                    "textStyle": {
+                      "fontFamily": "Arial",
+                      "fontSize": "8.5pt",
+                      "color": "#17961d"
+                    }
+                  },
+                  {
                     "value": "Annual growth in lending stock",
                     "textStyle": {
                       "fontFamily": "Arial",
                       "fontSize": "8.5pt",
-                      "color": "#cccccc"
+                      "color": "#128017"
                     }
                   }
                 ],

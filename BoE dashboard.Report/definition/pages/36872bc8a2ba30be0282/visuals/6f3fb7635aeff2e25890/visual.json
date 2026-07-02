@@ -177,7 +177,41 @@
           }
         }
       ],
-      "xAxisConstantLine": [
+      "lineStyles": [
+        {
+          "properties": {
+            "lineChartType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'linear'"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "markerSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "areaShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "xAxisReferenceLine": [
         {
           "properties": {
             "show": {
@@ -187,17 +221,17 @@
                 }
               }
             },
-            "value": {
+            "displayName": {
               "expr": {
                 "Literal": {
-                  "Value": "2020L"
+                  "Value": "'GFC'"
                 }
               }
             },
-            "style": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "'dashed'"
+                  "Value": "2009D"
                 }
               }
             },
@@ -206,7 +240,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#666677'"
+                      "Value": "'#FF6B8A'"
                     }
                   }
                 }
@@ -215,7 +249,7 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "40D"
+                  "Value": "50D"
                 }
               }
             },
@@ -226,45 +260,112 @@
                 }
               }
             },
-            "text": {
+            "dataLabelText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Name'"
+                }
+              }
+            },
+            "dataLabelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FF6B8A'"
+                    }
+                  }
+                }
+              }
+            },
+            "dataLabelVerticalPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'under'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "1"
+          }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "displayName": {
               "expr": {
                 "Literal": {
                   "Value": "'COVID'"
                 }
               }
             },
-            "fontSize": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "2020D"
                 }
               }
             },
-            "labelColor": {
+            "lineColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#999999'"
+                      "Value": "'#F5A623'"
                     }
                   }
                 }
               }
             },
-            "horizontalPosition": {
+            "width": {
               "expr": {
                 "Literal": {
-                  "Value": "'Left'"
+                  "Value": "3D"
                 }
               }
             },
-            "position": {
+            "dataLabelShow": {
               "expr": {
                 "Literal": {
-                  "Value": "'in_front'"
+                  "Value": "true"
+                }
+              }
+            },
+            "dataLabelText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Name'"
+                }
+              }
+            },
+            "dataLabelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F5A623'"
+                    }
+                  }
+                }
+              }
+            },
+            "dataLabelVerticalPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'under'"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "2"
           }
         }
       ]

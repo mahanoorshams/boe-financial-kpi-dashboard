@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "b1b2b3b4b5b6b7b8b9b0",
+  "name": "f30668c4108cbc6a827c",
   "position": {
-    "x": 297.14285714285717,
-    "y": 197.14285714285717,
-    "z": 15000,
-    "height": 30.000000000000004,
-    "width": 271.42857142857144,
-    "tabOrder": 14000
+    "x": 1285.7142857142858,
+    "y": 155.71428571428572,
+    "z": 13000,
+    "height": 57.142857142857146,
+    "width": 54.285714285714292,
+    "tabOrder": 18000
   },
   "visual": {
     "visualType": "textbox",
@@ -19,11 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "▼ Down from 5.25% peak · Aug 2023",
+                    "value": "bn",
                     "textStyle": {
                       "fontFamily": "Arial",
-                      "fontSize": "8.5pt",
-                      "color": "#f70000"
+                      "fontSize": "28pt",
+                      "color": "#ffffff"
                     }
                   }
                 ],
