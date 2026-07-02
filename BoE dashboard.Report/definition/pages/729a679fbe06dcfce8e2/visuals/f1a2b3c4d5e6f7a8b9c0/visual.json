@@ -228,7 +228,6 @@
       ],
       "xAxisConstantLine": [
         {
-          "id": "1",
           "properties": {
             "show": {
               "expr": {
