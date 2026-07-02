@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "0099fc35dc383a42f121",
   "position": {
-    "x": 732.18543046357615,
-    "y": 632.58278145695363,
+    "x": 732.63546798029552,
+    "y": 619.58128078817731,
     "z": 8000,
-    "height": 253.24503311258277,
-    "width": 694.0397350993378,
+    "height": 266.00985221674875,
+    "width": 693.8423645320197,
     "tabOrder": 7000
   },
   "visual": {
@@ -158,7 +158,74 @@
       ],
       "dataPoint": [
         {
-          "properties": {},
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Conditional": {
+                      "Cases": [
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 3,
+                              "Left": {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Measures (2)"
+                                    }
+                                  },
+                                  "Property": "Bank Rate YoY Change pp"
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "0D"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#EF4444'"
+                            }
+                          }
+                        },
+                        {
+                          "Condition": {
+                            "Comparison": {
+                              "ComparisonKind": 3,
+                              "Left": {
+                                "Measure": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Measures (2)"
+                                    }
+                                  },
+                                  "Property": "Bank Rate YoY Change pp"
+                                }
+                              },
+                              "Right": {
+                                "Literal": {
+                                  "Value": "0D"
+                                }
+                              }
+                            }
+                          },
+                          "Value": {
+                            "Literal": {
+                              "Value": "'#22C55E'"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
           "selector": {
             "data": [
               {

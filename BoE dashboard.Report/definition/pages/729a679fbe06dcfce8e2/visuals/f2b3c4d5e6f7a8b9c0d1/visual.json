@@ -169,6 +169,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }

@@ -2,12 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "c1c2c3c4c5c6c7c8c9c0",
   "position": {
-    "x": 588.57142857142856,
-    "y": 197.14285714285717,
+    "x": 569.52127390789826,
+    "y": 2.2167487684728835,
     "z": 16000,
-    "height": 30.000000000000004,
-    "width": 272.85714285714289,
-    "tabOrder": 15000
+    "height": 29.926108374384249,
+    "width": 275.01246015647632
   },
   "visual": {
     "visualType": "textbox",
@@ -34,8 +33,7 @@
                       "color": "#128017"
                     }
                   }
-                ],
-                "horizontalTextAlignment": "center"
+                ]
               }
             ]
           }
@@ -58,5 +56,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "parentGroupName": "daf1f57600cb6c403e8d"
 }
