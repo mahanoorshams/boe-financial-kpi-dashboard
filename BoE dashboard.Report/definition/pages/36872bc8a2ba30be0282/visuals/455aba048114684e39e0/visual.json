@@ -523,7 +523,7 @@
                   },
                   "Right": {
                     "Literal": {
-                      "Value": "'2016 Q1'"
+                      "Value": "'2019 Q1'"
                     }
                   }
                 }
@@ -588,6 +588,25 @@
             }
           ]
         }
+      },
+      {
+        "name": "089f1fd0ff0802bf6e16",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "mlar_mortgage_rates_clean"
+                  }
+                },
+                "Property": "Rate_Percent"
+              }
+            },
+            "Function": 1
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

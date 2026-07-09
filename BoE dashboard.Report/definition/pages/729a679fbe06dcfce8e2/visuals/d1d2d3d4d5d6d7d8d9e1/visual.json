@@ -19,11 +19,24 @@
               {
                 "textRuns": [
                   {
-                    "value": "Growth since 2007 base",
+                    "value": "£1.73tn →",
                     "textStyle": {
-                      "fontFamily": "Arial",
-                      "fontSize": "8pt",
-                      "color": "#aaaaaa"
+                      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+                      "fontSize": "9.5px",
+                      "color": "#b3b3b3"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "right"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "£3.18tn",
+                    "textStyle": {
+                      "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+                      "fontSize": "9.5px",
+                      "color": "#b3b3b3"
                     }
                   }
                 ],
